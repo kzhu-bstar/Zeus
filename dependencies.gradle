@@ -10,6 +10,9 @@ ext {
     sourceCompatibilityVersion = JavaVersion.VERSION_1_7
     targetCompatibilityVersion = JavaVersion.VERSION_1_7
 
+    // plugin
+    androidPlugin = 'com.android.tools.build:gradle:2.2.3'
+    jitpackPlugin = 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 
     ci = 'true'.equals(System.getenv('CI'))
 

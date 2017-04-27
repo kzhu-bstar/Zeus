@@ -1,12 +1,24 @@
-# zeus-libs
+# zeus-libs库
 
 ## 介绍
 
 ### 结构
 
-> 工具类
+> 工具类（kit_配套小元件）
 
-    1.
+    1. JsonHelper gson的帮助类，提供json与对象的转化的静态方法
+
+    2. L android Logcat日志帮助类，提供Debug版本和Release版本下的日志开启和关闭
+
+    3. ResourcesHelper 资源处理帮助类，提供Drawable、Color适配高版本api，获取手机屏幕宽高，dp与px的互转
+
+    4. ScreenSizeHelper 手机屏幕尺寸获取帮助类，提供初始化方法init来获取屏幕宽高并保存到SharedPreferences中，供以后使用
+
+    5. SPHelper SharedPreferences使用帮助类，提供简化SharedPreferences保存数据的api
+
+    6. Timer 时间记录器，提供打印方法执行时间的能力
+
+    7. ViewFinder 视图查找帮助类，提供静态方法类查找Activity和View下的视图根据id
 
 > 使用类
 

@@ -27,5 +27,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.github.kzhu-bstar:Zeus:0.1'
+//    compile 'com.github.kzhu-bstar.Zeus:zeus-annotations:0.11'
+//    compile 'com.github.kzhu-bstar.Zeus:zeus-compiler:0.11'
 }

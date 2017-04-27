@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.kzhu-bstar'
 
 android {
     compileSdkVersion 25
@@ -28,4 +31,13 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
+
+    def RxJavaLibrarys = rootProject.ext.RxJavaLibrarys
+    for (library in RxJavaLibrarys) {
+        compile library
+    }
+    def JsonLibrarys = rootProject.ext.JsonLibrarys
+    for (library in JsonLibrarys) {
+        compile library
+    }
 }
