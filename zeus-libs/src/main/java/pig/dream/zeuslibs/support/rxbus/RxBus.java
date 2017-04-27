@@ -21,7 +21,7 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
-import pig.dream.baselib.support.rxbus.annotation.Subscribe;
+import pig.dream.zeuslibs.support.rxbus.annotation.Subscribe;
 
 /**
  * RxBus
