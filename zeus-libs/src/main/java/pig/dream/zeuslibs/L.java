@@ -26,22 +26,22 @@ public class L {
         Logger.init(TAG);
     }
 
-    public static void i(String msg) {
-        i(TAG, msg);
+    public static void i(String format, Object... args) {
+        iByTag(TAG, format, args);
     }
 
-    public static void i(String tag, String format, Object... args) {
+    public static void iByTag(String tag, String format, Object... args) {
         if (!DBG) {
             return ;
         }
         Log.i(tag, TextUtils.isEmpty(format) ? "Message is Empty" : String.format(format, args));
     }
 
-    public static void w(String msg) {
-        w(TAG, msg);
+    public static void w(String format, Object... args) {
+        wByTag(TAG, format, args);
     }
 
-    public static void w(String tag, String format, Object... args) {
+    public static void wByTag(String tag, String format, Object... args) {
         if (!DBG) {
             return ;
         }
@@ -49,11 +49,11 @@ public class L {
         Log.w(tag, TextUtils.isEmpty(format) ? "Message is Empty" : String.format(format, args));
     }
 
-    public static void e(String msg) {
-        e(TAG, msg);
+    public static void e(String format, Object... args) {
+        wByTag(TAG, format, args);
     }
 
-    public static void e(String tag, String format, Object... args) {
+    public static void eByTag(String tag, String format, Object... args) {
         if (!DBG) {
             return ;
         }
@@ -61,11 +61,11 @@ public class L {
         Log.e(tag, TextUtils.isEmpty(format) ? "Message is Empty" : String.format(format, args));
     }
 
-    public static void d(String msg) {
-        d(TAG, msg);
+    public static void d(String format, Object... args) {
+        dByTag(TAG, format, args);
     }
 
-    public static void d(String tag, String format, Object... args) {
+    public static void dByTag(String tag, String format, Object... args) {
         if (!DBG) {
             return ;
         }
