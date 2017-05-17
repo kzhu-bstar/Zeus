@@ -32,6 +32,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
 
+    compile rootProject.ext.deps.swipebacklayout
     def RxJavaLibrarys = rootProject.ext.RxJavaLibrarys
     for (library in RxJavaLibrarys) {
         compile library
@@ -40,4 +41,5 @@ dependencies {
     for (library in JsonLibrarys) {
         compile library
     }
+
 }

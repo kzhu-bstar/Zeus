@@ -22,12 +22,10 @@ import javax.tools.Diagnostic;
 
 import pig.dream.annotations.BindIntent;
 import pig.dream.annotations.BindView;
-import pig.dream.annotations.RouteActivity;
-
-import static sun.management.Agent.error;
+import pig.dream.annotations.RouterActivity;
 
 /**
- * Created by zhukun on 2017/4/15.
+ * @author zhukun on 2017/4/15.
  */
 
 @AutoService(Processor.class)
@@ -38,6 +36,7 @@ public class PigToolsProcesser extends AbstractProcessor {
     private Messager messager;
 
     private Map<String, AnnotatedClass> mAnnotatedClassMap = new HashMap<>();
+    private Map<String, RouteActivityField> mRouteActivityMap = new HashMap<>();
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -54,7 +53,7 @@ public class PigToolsProcesser extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
         types.add(BindView.class.getCanonicalName());
-        types.add(RouteActivity.class.getCanonicalName());
+        types.add(RouterActivity.class.getCanonicalName());
         types.add(BindIntent.class.getCanonicalName());
         return types;
     }
@@ -68,6 +67,7 @@ public class PigToolsProcesser extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         // process() will be called several times
         mAnnotatedClassMap.clear();
+        mRouteActivityMap.clear();
 
         messager.printMessage(Diagnostic.Kind.NOTE, "Printing: 111");
         for (TypeElement te : annotations) {
@@ -79,22 +79,37 @@ public class PigToolsProcesser extends AbstractProcessor {
         try {
             processBindView(roundEnv);
             processBindIntent(roundEnv);
+            processRouteActivity(roundEnv);
         } catch (IllegalArgumentException e) {
-            error(e.getMessage());
+            messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());
             return true; // stop process
         }
 
+        generateBinder();
+        generateRouteActivity();
+
+        return true;
+    }
+
+    private void generateBinder() {
         for (AnnotatedClass annotatedClass : mAnnotatedClassMap.values()) {
             try {
-//                info("Generating file for %s", annotatedClass.getFullClassName());
-
-                annotatedClass.generateFinder().writeTo(mFiler);
+                annotatedClass.generateActivityCoreClass().writeTo(mFiler);
             } catch (IOException e) {
-                error("Generate file failed, reason: %s", e.getMessage());
-                return true;
+                messager.printMessage(Diagnostic.Kind.ERROR, "Generate file failed, reason: " + e.getMessage());
             }
         }
-        return true;
+    }
+
+    private void generateRouteActivity() {
+        if (mRouteActivityMap.size() <= 0) {
+            return;
+        }
+        try {
+            RouterAnnotatedClass.generateRouteActivityClass(mAnnotatedClassMap, mRouteActivityMap).writeTo(mFiler);
+        } catch (IOException e) {
+            messager.printMessage(Diagnostic.Kind.ERROR, "Generate file failed, reason: " + e.getMessage());
+        }
     }
 
     private void processBindView(RoundEnvironment roundEnv) throws IllegalArgumentException {
@@ -106,15 +121,23 @@ public class PigToolsProcesser extends AbstractProcessor {
     }
 
     private void processBindIntent(RoundEnvironment roundEnv) throws IllegalArgumentException {
-//        Set<? extends Element> sets = roundEnv.getElementsAnnotatedWith(BindIntent.class);
-//        if (sets == null) {
-//            return;
-//        }
         for (Element element : roundEnv.getElementsAnnotatedWith(BindIntent.class)) {
             AnnotatedClass annotatedClass = getAnnotatedClass(element);
             BindIntentField field = new BindIntentField(element);
             annotatedClass.addBindIntentField(field);
         }
+    }
+
+    private void processRouteActivity(RoundEnvironment roundEnv) throws IllegalArgumentException {
+        for (Element element : roundEnv.getElementsAnnotatedWith(RouterActivity.class)) {
+            RouteActivityField routeActivityField = new RouteActivityField(element);
+            String fullClassName = routeActivityField.getFullClassName();
+            messager.printMessage(Diagnostic.Kind.NOTE, "RouteActivity " + fullClassName);
+            if (!mRouteActivityMap.containsKey(fullClassName)) {
+                mRouteActivityMap.put(fullClassName, routeActivityField);
+            }
+        }
+
     }
 
     private AnnotatedClass getAnnotatedClass(Element element) {
@@ -127,5 +150,10 @@ public class PigToolsProcesser extends AbstractProcessor {
             mAnnotatedClassMap.put(fullClassName, annotatedClass);
         }
         return annotatedClass;
+    }
+
+    private void error(String format, Object... args) {
+        messager.printMessage(Diagnostic.Kind.ERROR, String.format(format, args));
+
     }
 }

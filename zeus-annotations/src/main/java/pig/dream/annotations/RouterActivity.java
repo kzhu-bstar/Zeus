@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  */
 
 @Retention(RetentionPolicy.CLASS)
-@Target(ElementType.METHOD)
-public @interface RouteActivity {
+@Target(ElementType.TYPE)
+public @interface RouterActivity {
     String value();
 }

@@ -8,7 +8,7 @@ import javax.lang.model.type.TypeMirror;
 import pig.dream.annotations.BindView;
 
 /**
- * Created by zhukun on 2017/4/15.
+ * @author zhukun on 2017/4/15.
  */
 
 public class BindViewField {

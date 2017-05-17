@@ -66,6 +66,8 @@ ext {
 }
 
 ext.deps = [
+        // swipebacklayout
+        swipebacklayout: 'me.imid.swipebacklayout.lib:library:1.0.0',
         // Square
         javapoet: 'com.squareup:javapoet:1.8.0',
 

@@ -18,7 +18,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 
 /**
- * Created by zhukun on 2017/4/15.
+ * @author zhukun on 2017/4/15.
  */
 
 public class AnnotatedClass {
@@ -32,9 +32,9 @@ public class AnnotatedClass {
         this.mClassElement = classElement;
         this.mElementUtils = mElementUtils;
     }
-    // omit some easy methods
 
-    public JavaFile generateFinder() {
+    // omit some easy methods
+    public JavaFile generateActivityCoreClass() {
 
         // method inject(final T host, Object source, Provider provider)
         MethodSpec.Builder injectMethodBuilder = MethodSpec.methodBuilder("inject")
