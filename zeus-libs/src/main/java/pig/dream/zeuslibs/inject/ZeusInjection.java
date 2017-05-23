@@ -44,7 +44,8 @@ public class ZeusInjection {
         createBinding(target, target);
     }
 
-    public static void createBinding(Object host, View source) {
+    private static void createBinding(Object host, View source) {
+//        Core core1 = getCore(host);
         String className = host.getClass().getName();
         try {
             Core core = FINDER_MAP.get(className);
@@ -59,14 +60,26 @@ public class ZeusInjection {
         }
     }
 
-    private static Core getCore(Object object) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    @NonNull
+    private static Core getCore(Object object) {
         String className = object.getClass().getName();
         Core core = FINDER_MAP.get(className);
-        if (core == null) {
-            Class<?> finderClass = Class.forName(className + "$$Core");
-            core = (Core) finderClass.newInstance();
-            FINDER_MAP.put(className, core);
+        if (core != null) {
+            return core;
         }
+        Class<?> targetClass = EmptyCore.class;;
+        try {
+            targetClass = Class.forName(className + "$$Core");
+        } catch (ClassNotFoundException e) {
+            targetClass = EmptyCore.class;;
+        }
+
+        try {
+            core = (Core) targetClass.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to inject for " + className, e);
+        }
+
         return core;
     }
 }

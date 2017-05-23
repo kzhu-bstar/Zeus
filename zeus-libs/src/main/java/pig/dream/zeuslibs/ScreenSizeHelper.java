@@ -8,7 +8,7 @@ import android.util.DisplayMetrics;
  *  依赖ResourcesHelper 获取屏幕尺寸
  *  依赖SPHelper SharedPreferences保存到文件中
  *
- * Created by zhukun on 2017/3/5.
+ * @author zhukun on 2017/3/5.
  */
 
 public class ScreenSizeHelper {

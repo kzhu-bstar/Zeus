@@ -7,7 +7,7 @@ import android.view.View;
 /**
  * View find helper
  *
- * Created by zhukun on 2017/3/5.
+ * @author zhukun on 2017/3/5.
  */
 
 public class ViewFinder {

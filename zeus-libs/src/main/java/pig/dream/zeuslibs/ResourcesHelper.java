@@ -12,7 +12,7 @@ import android.widget.TextView;
 /**
  * 资源获取帮助类（颜色、图片、尺寸）
  *
- * Created by zhukun on 2017/3/5.
+ * @author zhukun on 2017/3/5.
  */
 
 public class ResourcesHelper {

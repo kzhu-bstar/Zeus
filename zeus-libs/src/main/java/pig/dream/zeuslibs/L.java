@@ -9,7 +9,7 @@ import pig.dream.zeuslibs.support.logger.Logger;
 /**
  * 日记记录类
  *
- * Created by zhukun on 2017/3/5.
+ * @author zhukun on 2017/3/5.
  */
 
 public class L {

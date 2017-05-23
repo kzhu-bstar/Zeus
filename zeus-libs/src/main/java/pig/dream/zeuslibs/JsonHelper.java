@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 /**
  * Gson 帮助类 单例模式
  *
- * Created by zhukun on 2017/3/10.
+ * @author zhukun on 2017/3/10.
  */
 
 public class JsonHelper {

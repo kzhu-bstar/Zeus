@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * 控件满足条件enable启用，否则enbale false
  *
- * Created by zhukun on 2017/3/20.
+ * @author zhukun on 2017/3/20.
  */
 
 public class WidgetEnableStatusHelper {

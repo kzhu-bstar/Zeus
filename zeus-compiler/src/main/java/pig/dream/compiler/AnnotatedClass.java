@@ -22,6 +22,9 @@ import javax.lang.model.util.Elements;
  */
 
 public class AnnotatedClass {
+
+    private static final String ROOT_PACKAGE_NAME = "pig.dream.zeuslibs.inject";
+
     public TypeElement mClassElement;
     public Elements mElementUtils;
 
@@ -89,7 +92,7 @@ public class AnnotatedClass {
         // generate whole class
         TypeSpec finderClass = TypeSpec.classBuilder(mClassElement.getSimpleName() + "$$Core")
                 .addModifiers(Modifier.PUBLIC)
-                .addSuperinterface(ParameterizedTypeName.get(ClassName.get("pig.dream.baselib.pigtools", "Core"), TypeName.get(mClassElement.asType())))
+                .addSuperinterface(ParameterizedTypeName.get(ClassName.get(ROOT_PACKAGE_NAME, "Core"), TypeName.get(mClassElement.asType())))
                 .addMethod(injectMethodBuilder.build())
                 .addMethod(parseIntentBuilder.build())
                 .addMethod(saveInstanceStateBuilder.build())

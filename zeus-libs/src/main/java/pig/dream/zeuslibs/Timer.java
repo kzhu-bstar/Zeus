@@ -3,7 +3,7 @@ package pig.dream.zeuslibs;
 /**
  * 用于打印方法执行的时间
  *
- * Created by zhukun on 2017/3/15.
+ * @author zhukun on 2017/3/15.
  */
 
 public class Timer {

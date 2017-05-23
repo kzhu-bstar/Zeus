@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 特殊的Toast 解决重复显示问题
  *
- * Created by kzhu on 2016/10/28.
+ * @author kzhu on 2016/10/28.
  */
 public class ToastHelper {
     /** 之前显示的内容 */

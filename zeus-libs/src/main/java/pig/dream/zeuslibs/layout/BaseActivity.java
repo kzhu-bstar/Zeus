@@ -19,6 +19,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper;
 import pig.dream.zeuslibs.L;
 import pig.dream.zeuslibs.R;
 import pig.dream.zeuslibs.ViewFinder;
+import pig.dream.zeuslibs.inject.ZeusInjection;
 import pig.dream.zeuslibs.layout.mvp.MvpPresenter;
 import pig.dream.zeuslibs.layout.mvp.MvpView;
 import pig.dream.zeuslibs.support.statusbar.StatusBarHelper;
@@ -52,8 +53,9 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
         baseUIDelegate.initFunctionFlag(initFunctionFlag());
         initSwipeBack();
         setContentView(getContentView());
+        ZeusInjection.bind(this);
         init();
-        L.i(TAG, "==========>>>>Activity onCreate() %s flag %d", getClass().getSimpleName());
+        L.iByTag(TAG, "==========>>>>Activity onCreate() %s flag %d", getClass().getSimpleName());
     }
 
     @Override
@@ -109,6 +111,12 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
             this.presenter.detachView();
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ZeusInjection.saveInstanceState(this, outState);
     }
 
     public View.OnClickListener onClickListener() {
@@ -190,6 +198,7 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
     }
 
     public boolean parseIntentAndCheck(@Nullable Bundle savedInstanceState) {
+        ZeusInjection.parseIntent(this, savedInstanceState, getIntent());
         return false;
     }
 
