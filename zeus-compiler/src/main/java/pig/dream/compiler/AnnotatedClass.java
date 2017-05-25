@@ -108,17 +108,27 @@ public class AnnotatedClass {
         VariableElement element = bindIntentField.getFieldElement();
         TypeMirror typeMirror = bindIntentField.getFieldType();
         TypeKind typeKind = typeMirror.getKind();
-        if (typeKind == TypeKind.INT) {
-            return "host.$N = intent.getIntExtra($S, 0)";
-        } else if (typeKind == TypeKind.BOOLEAN) {
-            return "host.$N = intent.getBooleanExtra($S, false)";
-        } else if ("java.lang.String".equals(typeMirror.toString())){
-            return "host.$N = intent.getStringExtra($S)";
-        } else {
-            return "host.$N = intent.getSerializableExtra($S)";
-        }
+        switch (typeKind) {
+            case INT:
+                break;
+            case BOOLEAN:
+                result = "host.$N = intent.getBooleanExtra($S, false)";
+                break;
+            case DECLARED:
+                String typeMirrorName = typeMirror.toString();
+                if ("java.lang.String".equals(typeMirrorName)){
+                    result = "host.$N = intent.getStringExtra($S)";
+                } else if ("java.lang.Integer".equals(typeMirrorName)) {
+                    result = "host.$N = intent.getIntExtra($S, 0)";
+                } else {
+                    result = "host.$N = intent.getSerializableExtra($S)";
+                }
+                break;
+            default:
+                break;
 
-//        return result;
+        }
+        return result;
     }
 
     private String parseBundleType(BindIntentField bindIntentField) {
@@ -126,33 +136,55 @@ public class AnnotatedClass {
         VariableElement element = bindIntentField.getFieldElement();
         TypeMirror typeMirror = bindIntentField.getFieldType();
         TypeKind typeKind = typeMirror.getKind();
-        if (typeKind == TypeKind.INT) {
-            return "host.$N = savedInstanceState.getInt($S, 0)";
-        } else if (typeKind == TypeKind.BOOLEAN) {
-            return "host.$N = savedInstanceState.getBoolean($S, false)";
-        } else if ("java.lang.String".equals(typeMirror.toString())){
-            return "host.$N = savedInstanceState.getString($S)";
-        } else {
-            return "host.$N = savedInstanceState.getSerializable($S)";
-        }
+        switch (typeKind) {
+            case INT:
+                break;
+            case BOOLEAN:
+                result = "host.$N = savedInstanceState.getBoolean($S, false)";
+                break;
+            case DECLARED:
+                String typeMirrorName = typeMirror.toString();
+                if ("java.lang.String".equals(typeMirrorName)){
+                    result = "host.$N = savedInstanceState.getString($S)";
+                } else if ("java.lang.Integer".equals(typeMirrorName)) {
+                    result = "host.$N = savedInstanceState.getInt($S, 0)";
+                } else {
+                    result = "host.$N = savedInstanceState.getSerializable($S)";
+                }
+                break;
+            default:
+                break;
 
-//        return result;
+        }
+        return result;
     }
 
     private String saveInstanceState(BindIntentField bindIntentField) {
+        String result = "outState.putInt($S, host.$N);";
         VariableElement element = bindIntentField.getFieldElement();
         TypeMirror typeMirror = bindIntentField.getFieldType();
         TypeKind typeKind = typeMirror.getKind();
-        if (typeKind == TypeKind.INT) {
-            return "outState.putInt($S, host.$N);";
-        } else if (typeKind == TypeKind.BOOLEAN) {
-            return "outState.putBoolean($S, host.$N);";
-        } else if ("java.lang.String".equals(typeMirror.toString())){
-            return "outState.putString($S, host.$N);";
-        } else {
-            return "outState.putSerializable($S, host.$N);";
-        }
+        switch (typeKind) {
+            case INT:
+                break;
+            case BOOLEAN:
+                result = "outState.putBoolean($S, host.$N);";
+                break;
+            case DECLARED:
+                String typeMirrorName = typeMirror.toString();
+                if ("java.lang.String".equals(typeMirrorName)){
+                    result = "outState.putString($S, host.$N);";
+                } else if ("java.lang.Integer".equals(typeMirrorName)) {
+                    result = "outState.putInt($S, host.$N);";
+                } else {
+                    result = "outState.putSerializable($S, host.$N);";
+                }
+                break;
+            default:
+                break;
 
+        }
+        return  result;
     }
 
     public void addBindViewField(BindViewField bindViewField) {

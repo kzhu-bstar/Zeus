@@ -24,19 +24,11 @@ public class ZeusInjection {
     }
 
     public static void parseIntent(final Activity target, Bundle savedInstanceState, Intent intent) {
-        try {
-            getCore(target).parseIntent(target, savedInstanceState, intent);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to parseIntent for ", e);
-        }
+        getCore(target).parseIntent(target, savedInstanceState, intent);
     }
 
     public static void saveInstanceState(final Activity host, Bundle outState) {
-        try {
-            getCore(host).saveInstanceState(host, outState);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to saveInstanceState for ", e);
-        }
+        getCore(host).saveInstanceState(host, outState);
     }
 
     @NonNull
@@ -45,19 +37,7 @@ public class ZeusInjection {
     }
 
     private static void createBinding(Object host, View source) {
-//        Core core1 = getCore(host);
-        String className = host.getClass().getName();
-        try {
-            Core core = FINDER_MAP.get(className);
-            if (core == null) {
-                Class<?> finderClass = Class.forName(className + "$$Core");
-                core = (Core) finderClass.newInstance();
-                FINDER_MAP.put(className, core);
-            }
-            core.inject(host, source);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to inject for " + className, e);
-        }
+        getCore(host).inject(host, source);
     }
 
     @NonNull
